@@ -21,7 +21,7 @@ my $msg_content = 'Sample Message Content';
 $msg->content( $msg_content );
 ok( $msg->content() eq $msg_content, 'Message content update ok.');
 
-use Logger qw( DEBUG );
+use Logger::Levels qw( DEBUG );
 my $msg_lvl = DEBUG;
 $msg->level( $msg_lvl );
 ok ( $msg->level() eq $msg_lvl, 'Message level update ok.');

@@ -9,6 +9,7 @@ my @fclasees = qw(
     Logger
     Logger::Message
     Logger::Delegates::File
+    Logger::Levels
 );
 
 foreach( @fclasees ) {

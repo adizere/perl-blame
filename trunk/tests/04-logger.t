@@ -8,14 +8,14 @@ use Test::File;
 
 
 # log_levels comprises: DEBUG, INFO, WARN, ERROR, FATAL
-use_ok( 'Logger', qw( log add_delegate :log_levels  )  );
+use_ok( 'Logger', qw( log add_delegate  )  );
 
 can_ok( 'Logger', 'log' );
 can_ok( 'Logger', 'add_delegate' );
 can_ok( 'Logger', 'level' );
 
-use Logger qw( log :log_levels );
-
+use Logger qw( log );
+use Logger::Levels qw( INFO WARN DEBUG ERROR FATAL );
 
 foreach ( ( DEBUG, INFO, WARN, ERROR, FATAL ) ) {
     Logger->level( $_ );
@@ -67,4 +67,5 @@ foreach( 1..10 ) {
     file_line_count_is( $file_name, $count );
 }
 
+# cleanup
 unlink $file_name;
