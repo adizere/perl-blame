@@ -8,71 +8,27 @@ use base qw( Class::Accessor::Grouped Exporter );
 
 
 use Logger::Delegates::File;
+use Logger::Levels qw( DEFAULT_LOG_LVL compare_levels get_level_name );
+
 use Carp;
 
 
 # package members
 __PACKAGE__->mk_group_accessors( inherited => qw( level ) );
-
-my @delegates = ();
-my %levels;
-
-BEGIN {
-    # levels definitions
-    %levels = (
-        'debug_lvl' => {
-            name => 'DEBUG',
-            precedence => 5,
-        },
-        'information_lvl' => {
-            name => 'INFO',
-            precedence => 4,
-        },
-        'warning_lvl' => {
-            name => 'WARN',
-            precedence => 3,
-        },
-        'error_lvl' => {
-            name => 'ERROR',
-            precedence => 2,
-        },
-        'fatal_error_lvl' => {
-            name => 'FATAL',
-            precedence => 1,
-        }
-    );
-};
+__PACKAGE__->level( DEFAULT_LOG_LVL );
 
 
-# levels will be exported into constants for ease of use
-use constant {
-    DEBUG => 'debug_lvl',
-    INFO => 'information_lvl',
-    WARN => 'warning_lvl',
-    ERROR => 'error_lvl',
-    FATAL => 'fatal_error_lvl',
-};
+my @_delegates = ();
 
 
-# default logging level; also used in Logger::Message
-my $_DEFAULT_LEVEL = 'information_lvl';
-our $DEFAULT_LEVEL_NAME = $levels{$_DEFAULT_LEVEL}->{name};
-our $DEFAULT_LEVEL_PRECEDENCE = $levels{$_DEFAULT_LEVEL}->{precedence};
+our @EXPORT_OK = qw( log add_delegate );
 
-
-__PACKAGE__->level( $_DEFAULT_LEVEL );
-
-
-our @EXPORT_OK = qw( log add_delegate DEBUG INFO WARN ERROR FATAL );
-our %EXPORT_TAGS = (
-    'log_levels' => [ qw( DEBUG INFO WARN ERROR FATAL ) ],
-);
 
 
 sub log {
     my ( $level, $message_string ) = @_;
 
-    unless( @delegates && scalar( @delegates ) > 0 ) {
+    unless( @_delegates && scalar( @_delegates ) > 0 ) {
         croak "No delegates selected. Can't log.";
         return;
     }
@@ -80,16 +36,16 @@ sub log {
     # called only with 1 parameter - the message;
     unless ( $message_string ) {
         $message_string = $level;
-        $level = $_DEFAULT_LEVEL; # assume the intended level is the default one..
+        $level = __PACKAGE__->level(); # assume the intended level is the default one..
     }
 
     # make sure the logging level isn't higher than that of this message
-    return unless $levels{$level}->{precedence} le $levels{__PACKAGE__->level()}->{precedence};
+    return if ( $level ne __PACKAGE__->level() || compare_levels( $level, __PACKAGE__->level() ) == -1 );
 
     require Logger::Message;
     _log_message( Logger::Message->new({
         content => $message_string,
-        level => $levels{$level}->{name},
+        level => get_level_name( $level ),
     }));
 
     return 1;
@@ -99,9 +55,9 @@ sub log {
 sub _log_message {
     my $message = shift();
 
-    return unless @delegates;
+    return unless @_delegates;
 
-    foreach( @delegates ) {
+    foreach( @_delegates ) {
         $_->to_log( $message->to_string() );
     }
 }
@@ -119,7 +75,7 @@ sub add_delegate {
         return;
     }
 
-    push @delegates, $delegate;
+    push @_delegates, $delegate;
 }
 
 

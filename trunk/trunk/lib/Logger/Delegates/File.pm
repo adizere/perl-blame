@@ -9,8 +9,6 @@ use base qw( Logger::Delegates::Base );
 
 use Carp;
 
-our $fh;
-
 
 sub _init {
     my ( $self, $file ) = @_;
@@ -20,19 +18,23 @@ sub _init {
     if ( ( -e $file ) && ( ! -w $file ) ) {
         croak "Cannot access (write to) $file for log outputing.\n";
     }
+
+    my $fh;
     open( $fh, ">>", $file ) || croak "Cannot log to '$file': $!.";
+
+    $self->{_out} = $fh;
 }
 
 
 sub to_log {
     my ( $self, $content ) = @_;
 
-    unless ( $fh ) {
+    unless ( exists $self->{_out} && $self->{_out} ) {
         warn "No file selected for output.\n";
         return;
     }
 
-    syswrite $fh, $content;
+    syswrite $self->{_out}, $content;
 }
 
 1;
