@@ -48,9 +48,10 @@ sub to_string {
     my $self = shift();
 
     my $ret;
-    foreach( qw( header timestamp level content ) ) {
+    foreach( qw( header timestamp level ) ) {
         $ret .= '[' . $self->$_() . ']' if ( defined $self->$_() );
     }
+    $ret .= $self->content() if ( defined $self->content() );
     $ret .= "\n";
 }
 
