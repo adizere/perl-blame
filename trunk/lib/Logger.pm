@@ -7,13 +7,16 @@ use warnings;
 use base qw( Class::Accessor::Grouped Exporter );
 
 
-use Readonly;
 use Logger::Delegates::File;
+use Carp;
 
 
+# package members
 __PACKAGE__->mk_group_accessors( inherited => qw( level ) );
 
+my @delegates = ();
 my %levels;
+
 BEGIN {
     # levels definitions
     %levels = (
@@ -40,6 +43,7 @@ BEGIN {
     );
 };
 
+
 # levels will be exported into constants for ease of use
 use constant {
     DEBUG => 'debug_lvl',
@@ -59,12 +63,7 @@ our $DEFAULT_LEVEL_PRECEDENCE = $levels{$_DEFAULT_LEVEL}->{precedence};
 __PACKAGE__->level( $_DEFAULT_LEVEL );
 
 
-my @delegates = (
-    Logger::Delegates::File->new(),
-);
-
-
-our @EXPORT_OK = qw( log DEBUG INFO WARN ERROR FATAL );
+our @EXPORT_OK = qw( log add_delegate DEBUG INFO WARN ERROR FATAL );
 our %EXPORT_TAGS = (
     'log_levels' => [ qw( DEBUG INFO WARN ERROR FATAL ) ],
 );
@@ -72,6 +71,11 @@ our %EXPORT_TAGS = (
 
 sub log {
     my ( $level, $message_string ) = @_;
+
+    unless( @delegates && scalar( @delegates ) > 0 ) {
+        croak "No delegates selected. Can't log.";
+        return;
+    }
 
     # called only with 1 parameter - the message;
     unless ( $message_string ) {
@@ -106,7 +110,14 @@ sub _log_message {
 sub add_delegate {
     my ( $class, $delegate ) = @_;
 
-    return unless ( $delegate );
+    unless ( $delegate && $class && ( ref ( $class) ne __PACKAGE__ ) ) {
+        $delegate = $class;
+    }
+
+    unless ( $delegate && $delegate->isa( 'Logger::Delegates::Base' ) ) {
+        croak "$delegate: Not a valid delegate.";
+        return;
+    }
 
     push @delegates, $delegate;
 }

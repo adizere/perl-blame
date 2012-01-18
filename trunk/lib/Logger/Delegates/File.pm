@@ -7,15 +7,20 @@ use warnings;
 use base qw( Logger::Delegates::Base );
 
 
+use Carp;
+
 our $fh;
 
 
 sub _init {
-    my $file = '/tmp/log';
+    my ( $self, $file ) = @_;
+
+    croak "No output file provided." unless ( $file && length( $file ) > 0 );
+
     if ( ( -e $file ) && ( ! -w $file ) ) {
-        die "Cannot access (write to) $file for log outputing.\n";
+        croak "Cannot access (write to) $file for log outputing.\n";
     }
-    open( $fh, ">>", $file );
+    open( $fh, ">>", $file ) || croak "Cannot log to '$file': $!.";
 }
 
 
@@ -27,7 +32,7 @@ sub to_log {
         return;
     }
 
-    print $fh $content;
+    syswrite $fh, $content;
 }
 
 1;
