@@ -9,7 +9,7 @@ use base qw( Logger::Delegates::Base );
 
 use Carp;
 
-
+# inspired from Fault::Delegate::DB
 sub _init {
     my ( $self, $args ) = @_;
 
@@ -26,7 +26,7 @@ sub to_log {
 sub _check_args {
     my ( $self, $args ) = @_;
 
-    #unless 
+    #unless
 }
 
 1;

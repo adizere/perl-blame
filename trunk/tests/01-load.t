@@ -7,7 +7,7 @@ use Test::More 'no_plan';
 
 my @fclasees = qw(
     Logger
-    Logger::Message
+    Logger::Entry
     Logger::Delegates::File
     Logger::Levels
 );

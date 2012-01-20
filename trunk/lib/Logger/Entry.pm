@@ -1,4 +1,4 @@
-package Logger::Message;
+package Logger::Entry;
 
 use strict;
 use warnings;
