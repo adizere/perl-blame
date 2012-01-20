@@ -8,15 +8,11 @@ use base qw( Class::Accessor::Grouped );
 
 
 use Logger;
+use Logger::Levels qw( DEFAULT_LOG_LVL get_level_name );
 use Utilities qw( datetime_iso8601 );
 
 
 __PACKAGE__->mk_group_accessors( simple => qw( level content timestamp header ) );
-
-
-# log level: INFO (imported from Logger)
-my $DEFAULT_LEVEL = $Logger::DEFAULT_LEVEL_NAME;
-
 
 
 sub new {
@@ -31,7 +27,7 @@ sub new {
 
     # set the level..
     unless ( defined $args->{level} ) {
-        $args->{level} = $DEFAULT_LEVEL;
+        $args->{level} = get_level_name( DEFAULT_LOG_LVL );
     }
     $self->level( $args->{level} );
 

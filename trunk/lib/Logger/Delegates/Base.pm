@@ -20,7 +20,7 @@ sub _init {
     return;
 }
 
-
+# to be overrriden
 sub to_log {
     my $self = shift();
 
