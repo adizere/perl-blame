@@ -31,8 +31,9 @@ my $lines_count = 2;
 foreach( 1 .. $lines_count ) {
     log( 'Test' );
 }
-foreach( @delegates_out_files ) {
-    file_line_count_is( $_, $lines_count );
+
+foreach my $file ( @delegates_out_files ) {
+    file_line_count_is( $file, $lines_count );
 }
 
-unlink $_ foreach( @delegates_out_files );
+unlink @delegates_out_files;
