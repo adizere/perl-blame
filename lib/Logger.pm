@@ -42,8 +42,8 @@ sub log {
     # make sure the logging level isn't higher than that of this message
     return if ( $level ne __PACKAGE__->level() || compare_levels( $level, __PACKAGE__->level() ) == -1 );
 
-    require Logger::Message;
-    _log_message( Logger::Message->new({
+    require Logger::Entry;
+    _log_message( Logger::Entry->new({
         content => $message_string,
         level => get_level_name( $level ),
     }));

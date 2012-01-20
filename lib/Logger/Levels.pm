@@ -66,7 +66,7 @@ sub compare_levels {
 }
 
 
-# to be used when creating Messages - which need to contain the log level name: INFO / DEBUG / etc..
+# to be used when creating Entries - which need to contain the log level name: INFO / DEBUG / etc..
 sub get_level_name {
     my $lvl = shift();
 
