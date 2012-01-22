@@ -27,14 +27,14 @@ sub _init {
 
 
 sub to_log {
-    my ( $self, $content ) = @_;
+    my ( $self, $message ) = @_;
 
     unless ( exists $self->{_out} && $self->{_out} ) {
         warn "No file selected for output.\n";
         return;
     }
 
-    syswrite $self->{_out}, $content;
+    syswrite $self->{_out}, $message->to_string();
 }
 
 1;

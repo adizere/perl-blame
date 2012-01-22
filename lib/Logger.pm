@@ -58,7 +58,7 @@ sub _log_message {
     return unless @_delegates;
 
     foreach( @_delegates ) {
-        $_->to_log( $message->to_string() );
+        $_->to_log( $message );
     }
 }
 

@@ -12,7 +12,7 @@ use Logger::Levels qw( DEFAULT_LOG_LVL get_level_name );
 use Utilities qw( datetime_iso8601 );
 
 
-__PACKAGE__->mk_group_accessors( simple => qw( level content timestamp header ) );
+__PACKAGE__->mk_group_accessors( simple => qw( header timestamp level content ) );
 
 
 sub new {
@@ -49,6 +49,18 @@ sub to_string {
     }
     $ret .= $self->content() if ( defined $self->content() );
     $ret .= "\n";
+}
+
+
+sub to_hashref {
+    my $self = shift();
+
+    my $ret;
+    foreach( qw( header timestamp level content ) ) {
+        $ret->{$_} = $self->$_();
+    }
+
+    return $ret;
 }
 
 
