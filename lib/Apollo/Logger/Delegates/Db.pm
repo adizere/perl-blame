@@ -1,13 +1,13 @@
-package Logger::Delegates::Db;
+package Apollo::Logger::Delegates::Db;
 
 use strict;
 use warnings;
 
 
-use base qw( Logger::Delegates::Base Exporter );
+use base qw( Apollo::Logger::Delegates::Base Exporter );
 
 
-use Logger::Delegates::Db::Handle;
+use Apollo::Logger::Delegates::Db::Handle;
 
 use Carp;
 
@@ -29,7 +29,7 @@ sub _init {
     $self->_check_args( $args );
 
     # self members
-    $self->{_db_handle} = Logger::Delegates::Db::Handle->new();
+    $self->{_db_handle} = Apollo::Logger::Delegates::Db::Handle->new();
 
     $self->{_db_handle}->set_log_name( $args->{log_name} );
 

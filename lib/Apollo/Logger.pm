@@ -1,14 +1,14 @@
-package Logger;
+package Apollo::Logger;
 
 use strict;
 use warnings;
 
 
-use base qw( Class::Accessor::Grouped Exporter );
+use base qw( Class::Accessor::Grouped Exporter Apollo::Base );
 
 
-use Logger::Delegates::File;
-use Logger::Levels qw( DEFAULT_LOG_LVL compare_levels get_level_name );
+use Apollo::Logger::Delegates::File;
+use Apollo::Logger::Levels qw( DEFAULT_LOG_LVL compare_levels get_level_name );
 
 use Carp;
 
@@ -42,8 +42,8 @@ sub log {
     # make sure the logging level isn't higher than that of this message
     return if ( $level ne __PACKAGE__->level() || compare_levels( $level, __PACKAGE__->level() ) == -1 );
 
-    require Logger::Entry;
-    _log_message( Logger::Entry->new({
+    require Apollo::Logger::Entry;
+    _log_message( Apollo::Logger::Entry->new({
         content => $message_string,
         level => get_level_name( $level ),
     }));
@@ -70,7 +70,7 @@ sub add_delegate {
         $delegate = $class;
     }
 
-    unless ( $delegate && $delegate->isa( 'Logger::Delegates::Base' ) ) {
+    unless ( $delegate && $delegate->isa( 'Apollo::Logger::Delegates::Base' ) ) {
         croak "$delegate: Not a valid delegate.";
         return;
     }

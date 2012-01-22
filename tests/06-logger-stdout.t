@@ -6,15 +6,15 @@ use Test::More 'no_plan';
 use IO::Capture::Stdout;
 
 
-use Logger qw( log add_delegate );
-use Logger::Delegates::Stdout;
+use Apollo::Logger qw( log add_delegate );
+use Apollo::Logger::Delegates::Stdout;
 
 
 my $delegates_count = 3;
 
 foreach( 1 .. $delegates_count ) {
 
-    my $delegate = Logger::Delegates::Stdout->new();
+    my $delegate = Apollo::Logger::Delegates::Stdout->new();
     isnt ( $delegate, undef, 'Ok Stdout delegate creation' );
     add_delegate( $delegate );
 }

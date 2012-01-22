@@ -1,9 +1,9 @@
-package Utilities;
+package Apollo::Utilities;
 
 use strict;
 use warnings;
 
-use base qw( Exporter );
+use base qw( Exporter Apollo::Base );
 
 use POSIX qw( strftime );
 
