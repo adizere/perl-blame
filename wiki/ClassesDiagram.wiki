@@ -1,0 +1,12 @@
+#summary Presentation of the application classes.
+#labels Phase-Design
+
+= Introduction =
+
+The UML diagram containing the classes and the relashionships between them can be found in /trunk/docs/ in .png format.
+
+http://perl-blame.googlecode.com/svn/trunk/docs/perl-blame(Apollo)-UML.png
+
+= Details =
+
+# TODO..
