@@ -144,4 +144,15 @@ sub _get_log_by_name {
     return $sth->fetchrow_hashref();
 }
 
+
+sub DESTROY {
+  my $self = shift();
+
+  ( defined $self->{_handle} ) && $self->{_handle}->disconnect;
+  $self->{_handle} = undef;
+
+  return $self;
+}
+
+
 1;
