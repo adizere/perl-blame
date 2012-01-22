@@ -11,9 +11,9 @@ use Carp;
 
 
 sub to_log {
-    my ( $self, $content ) = @_;
+    my ( $self, $message ) = @_;
 
-    print $content; # as simple as that
+    print $message->to_string(); # as simple as that
 }
 
 1;

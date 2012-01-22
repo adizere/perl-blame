@@ -12,7 +12,7 @@ use Logger::Delegates::Db::Handle;
 use Carp;
 
 
-use constants {
+use constant {
     DBLOG_HANDLER_INIT => 1,
     DBLOG_PARAMS_INIT => 2,
 };
@@ -31,6 +31,8 @@ sub _init {
     # self members
     $self->{_db_handle} = Logger::Delegates::Db::Handle->new();
 
+    $self->{_db_handle}->set_log_name( $args->{log_name} );
+
     if ( $args->{init_type} eq DBLOG_HANDLER_INIT ) {
         $self->{_db_handle}->set_handle( $args->{handle} );
 
@@ -42,9 +44,9 @@ sub _init {
 
 
 sub to_log {
-    my ( $self, $content ) = @_;
+    my ( $self, $message ) = @_;
 
-    # todo..
+    $self->{_db_handle}->insert_log_entry( $message );
 }
 
 
@@ -71,7 +73,11 @@ sub _check_args {
 
     } elsif ( $args->{init_type} eq DBLOG_PARAMS_INIT ) {
         # logger initialized with the data source parameters, not yet implemented either
-        # todo: check that the mandatory arguments are provided
+        foreach( qw( username password host port database driver_name ) ) {
+            unless ( exists $args->{$_} && defined $args->{$_} ) {
+                croak "Invalid obj. initialization - need the '$_'.";
+            }
+        }
 
     } else {
         croak "Initialization failed - Init method not valid.";
