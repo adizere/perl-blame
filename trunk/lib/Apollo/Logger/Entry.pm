@@ -34,7 +34,7 @@ sub new {
     # timestamp
     $self->timestamp( datetime_iso8601() );
 
-    $self->header( undef );
+    $self->header( $args->{header} || undef );
 
     return $self;
 }
