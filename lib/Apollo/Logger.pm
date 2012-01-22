@@ -14,7 +14,7 @@ use Carp;
 
 
 # package members
-__PACKAGE__->mk_group_accessors( inherited => qw( level ) );
+__PACKAGE__->mk_group_accessors( inherited => qw( level header ) );
 __PACKAGE__->level( DEFAULT_LOG_LVL );
 
 
@@ -43,16 +43,17 @@ sub log {
     return if ( $level ne __PACKAGE__->level() || compare_levels( $level, __PACKAGE__->level() ) == -1 );
 
     require Apollo::Logger::Entry;
-    _log_message( Apollo::Logger::Entry->new({
+    _log_entry( Apollo::Logger::Entry->new({
         content => $message_string,
         level => get_level_name( $level ),
+        header => __PACKAGE__->header(),
     }));
 
     return 1;
 }
 
 
-sub _log_message {
+sub _log_entry {
     my $message = shift();
 
     return unless @_delegates;
