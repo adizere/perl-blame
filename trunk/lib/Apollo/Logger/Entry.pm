@@ -1,4 +1,4 @@
-package Logger::Entry;
+package Apollo::Logger::Entry;
 
 use strict;
 use warnings;
@@ -7,9 +7,9 @@ use warnings;
 use base qw( Class::Accessor::Grouped );
 
 
-use Logger;
-use Logger::Levels qw( DEFAULT_LOG_LVL get_level_name );
-use Utilities qw( datetime_iso8601 );
+use Apollo::Logger;
+use Apollo::Logger::Levels qw( DEFAULT_LOG_LVL get_level_name );
+use Apollo::Utilities qw( datetime_iso8601 );
 
 
 __PACKAGE__->mk_group_accessors( simple => qw( header timestamp level content ) );

@@ -1,4 +1,4 @@
-package Logger::Delegates::Db::Handle;
+package Apollo::Logger::Delegates::Db::Handle;
 
 use strict;
 use warnings;
@@ -8,7 +8,7 @@ use DBI;
 use Carp;
 
 
-# class only used internally from Logger::Delegates::Db
+# class only used internally from Apollo::Logger::Delegates::Db
 # please don't try using it directly..
 sub new {
     my $class = shift();
@@ -76,7 +76,7 @@ sub _fetch_container {
 
     croak "Need the driver name." unless ( $driver_name );
 
-    my $loader_class = 'Logger::Delegates::Db::SqlContainer::' . ucfirst( lc( $driver_name ) );
+    my $loader_class = 'Apollo::Logger::Delegates::Db::SqlContainer::' . ucfirst( lc( $driver_name ) );
 
     eval "require $loader_class";
     if ( $@ ) {

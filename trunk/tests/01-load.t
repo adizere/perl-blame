@@ -6,10 +6,10 @@ use Test::More 'no_plan';
 
 
 my @fclasees = qw(
-    Logger
-    Logger::Entry
-    Logger::Delegates::File
-    Logger::Levels
+    Apollo::Logger
+    Apollo::Logger::Entry
+    Apollo::Logger::Delegates::File
+    Apollo::Logger::Levels
 );
 
 foreach( @fclasees ) {

@@ -1,10 +1,10 @@
-package Logger::Delegates::Stderr;
+package Apollo::Logger::Delegates::Stderr;
 
 use strict;
 use warnings;
 
 
-use base qw( Logger::Delegates::Base );
+use base qw( Apollo::Logger::Delegates::Base );
 
 
 use Carp;

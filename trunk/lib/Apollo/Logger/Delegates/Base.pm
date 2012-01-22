@@ -1,4 +1,4 @@
-package Logger::Delegates::Base;
+package Apollo::Logger::Delegates::Base;
 
 use strict;
 use warnings;

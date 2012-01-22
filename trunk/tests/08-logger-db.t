@@ -5,13 +5,13 @@ use warnings;
 use Test::More 'no_plan';
 
 
-use Logger qw( log add_delegate );
-use Logger::Delegates::Db qw( DBLOG_HANDLER_INIT DBLOG_PARAMS_INIT );
+use Apollo::Logger qw( log add_delegate );
+use Apollo::Logger::Delegates::Db qw( DBLOG_HANDLER_INIT DBLOG_PARAMS_INIT );
 
 
 # initialization methods...
 # with DB parameters
-my $delegate = Logger::Delegates::Db->new({
+my $delegate = Apollo::Logger::Delegates::Db->new({
     init_type => DBLOG_PARAMS_INIT,
     log_name => 'db_logger_test_5',
     driver_name => 'mysql',
@@ -30,7 +30,7 @@ isnt ( $delegate, undef, 'Ok Stderr delegate creation' );
 add_delegate( $delegate );
 
 
-$delegate = Logger::Delegates::Db->new({
+$delegate = Apollo::Logger::Delegates::Db->new({
     init_type => DBLOG_PARAMS_INIT,
     log_name => 'db_logger_test_4',
     driver_name => 'mysql',

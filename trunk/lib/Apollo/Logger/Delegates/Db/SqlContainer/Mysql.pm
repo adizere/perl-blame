@@ -1,10 +1,10 @@
-package Logger::Delegates::Db::SqlContainer::Mysql;
+package Apollo::Logger::Delegates::Db::SqlContainer::Mysql;
 
 use strict;
 use warnings;
 
 
-use base qw( Logger::Delegates::Db::SqlContainer::Base );
+use base qw( Apollo::Logger::Delegates::Db::SqlContainer::Base );
 
 
 # package level SQL statements... this is essentially what forms each Container package

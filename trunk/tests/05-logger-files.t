@@ -6,8 +6,8 @@ use Test::More 'no_plan';
 use Test::File;
 
 
-use Logger qw( log add_delegate );
-use Logger::Delegates::File;
+use Apollo::Logger qw( log add_delegate );
+use Apollo::Logger::Delegates::File;
 
 
 my $delegates_count = 10;
@@ -17,7 +17,7 @@ foreach( 1 .. $delegates_count ) {
     my $file = '/tmp/_' . time() . $$ . "_blame_test_$_.log";
     push @delegates_out_files, $file;
 
-    my $delegate = Logger::Delegates::File->new( $file );
+    my $delegate = Apollo::Logger::Delegates::File->new( $file );
     add_delegate( $delegate );
 
     file_exists_ok ( $file );

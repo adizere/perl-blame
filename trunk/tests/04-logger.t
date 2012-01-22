@@ -8,40 +8,40 @@ use Test::File;
 
 
 # log_levels comprises: DEBUG, INFO, WARN, ERROR, FATAL
-use_ok( 'Logger', qw( log add_delegate  )  );
+use_ok( 'Apollo::Logger', qw( log add_delegate  )  );
 
-can_ok( 'Logger', 'log' );
-can_ok( 'Logger', 'add_delegate' );
-can_ok( 'Logger', 'level' );
+can_ok( 'Apollo::Logger', 'log' );
+can_ok( 'Apollo::Logger', 'add_delegate' );
+can_ok( 'Apollo::Logger', 'level' );
 
-use Logger qw( log );
-use Logger::Levels qw( INFO WARN DEBUG ERROR FATAL );
+use Apollo::Logger qw( log );
+use Apollo::Logger::Levels qw( INFO WARN DEBUG ERROR FATAL );
 
 foreach ( ( DEBUG, INFO, WARN, ERROR, FATAL ) ) {
-    Logger->level( $_ );
-    is( Logger->level(), $_, "OK level update for $_." );
+    Apollo::Logger->level( $_ );
+    is( Apollo::Logger->level(), $_, "OK level update for $_." );
 }
 
 # put the level to the lowest level now..
-Logger->level( DEBUG );
+Apollo::Logger->level( DEBUG );
 
 
 # test levels without any delegate
 foreach my $outer_level ( ( DEBUG, INFO, WARN, ERROR, FATAL ) ) {
     foreach my $inner_level ( ( DEBUG, INFO, WARN, ERROR, FATAL ) ) {
         my $status;
-        dies_ok { $status = log( $inner_level, "Outer: [$outer_level], Inner: [$inner_level]" ); } 'Logger should die when no delegates defined.';
+        dies_ok { $status = log( $inner_level, "Outer: [$outer_level], Inner: [$inner_level]" ); } 'Apollo::Logger should die when no delegates defined.';
         is ( $status, undef, 'No delegate defined means nothing logged.' );
     }
 }
 
 
 # add the File delegate and test it
-use_ok( 'Logger::Delegates::File', qw( new ) );
-use Logger::Delegates::File;
+use_ok( 'Apollo::Logger::Delegates::File', qw( new ) );
+use Apollo::Logger::Delegates::File;
 
 my $file_name = '/tmp/_' . time() . $$ . "_blame_test.log";
-my $delegate = Logger::Delegates::File->new( $file_name );
+my $delegate = Apollo::Logger::Delegates::File->new( $file_name );
 
 file_exists_ok ( $file_name );
 file_empty_ok ( $file_name );

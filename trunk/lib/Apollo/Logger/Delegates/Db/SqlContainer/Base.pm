@@ -1,4 +1,4 @@
-package Logger::Delegates::Db::SqlContainer::Base;
+package Apollo::Logger::Delegates::Db::SqlContainer::Base;
 
 use strict;
 use warnings;

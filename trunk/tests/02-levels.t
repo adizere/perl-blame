@@ -4,10 +4,10 @@ use warnings;
 
 use Test::More 'no_plan';
 
-use_ok( 'Logger::Levels', qw( DEFAULT_LOG_LVL DEBUG INFO WARN ERROR FATAL compare_levels ) );
+use_ok( 'Apollo::Logger::Levels', qw( DEFAULT_LOG_LVL DEBUG INFO WARN ERROR FATAL compare_levels ) );
 
 
-use Logger::Levels qw( DEFAULT_LOG_LVL DEBUG INFO WARN ERROR FATAL compare_levels get_level_precedence );
+use Apollo::Logger::Levels qw( DEFAULT_LOG_LVL DEBUG INFO WARN ERROR FATAL compare_levels get_level_precedence );
 
 fail( 'Default log level not defined' ) unless ( defined DEFAULT_LOG_LVL );
 

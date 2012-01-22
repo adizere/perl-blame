@@ -6,15 +6,15 @@ use Test::More 'no_plan';
 use IO::Capture::Stderr;
 
 
-use Logger qw( log add_delegate );
-use Logger::Delegates::Stderr;
+use Apollo::Logger qw( log add_delegate );
+use Apollo::Logger::Delegates::Stderr;
 
 
 my $delegates_count = 5;
 
 foreach( 1 .. $delegates_count ) {
 
-    my $delegate = Logger::Delegates::Stderr->new();
+    my $delegate = Apollo::Logger::Delegates::Stderr->new();
     isnt ( $delegate, undef, 'Ok Stderr delegate creation' );
     add_delegate( $delegate );
 }

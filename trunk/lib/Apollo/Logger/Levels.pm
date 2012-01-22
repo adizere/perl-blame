@@ -1,4 +1,4 @@
-package Logger::Levels;
+package Apollo::Logger::Levels;
 
 use strict;
 use warnings;
